@@ -1,0 +1,53 @@
+name: Arduino Compile
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Arduino library lint
+        uses: arduino/arduino-lint-action@v2
+        with:
+          compliance: specification
+
+  examples:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        sketch:
+          - examples/batthub_quick_start
+          - examples/batthub_all_features
+          - examples/bq25_basic
+          - examples/bq25_bq27_module
+          - examples/bq27_basic
+          - examples/fuel_gauge_setup_once
+          - examples/otg_and_ship_mode
+          - examples/production_self_test
+          - examples/quick_start_module
+          - examples/serial_control_console
+          - examples/web_debug_ui
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v2
+
+      - name: Install ESP32 core
+        run: |
+          arduino-cli config init --overwrite
+          arduino-cli config set board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32@3.3.0
+
+      - name: Compile ${{ matrix.sketch }}
+        run: arduino-cli compile --fqbn esp32:esp32:esp32c3 --library . "${{ matrix.sketch }}"

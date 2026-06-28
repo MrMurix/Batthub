@@ -13,7 +13,10 @@ Das Batthub-Modul hat keinen eigenen Mikrocontroller. Ein Nutzer verbindet seine
 | --- | --- |
 | [BQ25/BQ27 fuer Beginner](BQ25_BQ27_BEGINNER.md#deutsch) | Kurze, einfache Erklaerung fuer Nutzer ohne Vorwissen. |
 | [Web UI Doku](BATTHUB_WEB_UI.md#deutsch) | Alle sichtbaren Web-UI-Begriffe, Buttons, Werte und Risiken. |
+| [Charging Troubleshooting](CHARGING_TROUBLESHOOTING.md#deutsch) | Schrittfolge, wenn Laden langsam ist, stoppt oder unverstaendlich wirkt. |
 | [Library Doku](BATTHUB_LIBRARY.md#deutsch---kurzfassung) | Batthub Library, Start, Pins, API und Begriffe. |
+| [API Reference](API_REFERENCE.md) | Uebersicht der oeffentlichen Klassen und Methoden. |
+| [Hardware Handoff](HARDWARE_HANDOFF.md) | Was noch zusammen mit Schaltplan/BOM hochgeladen werden muss. |
 | [Produkt-Check](PRODUCT_READINESS.md#deutsch) | Kurze Sicherheits- und Verkaufsvorbereitung. |
 
 ## English
@@ -22,7 +25,10 @@ Das Batthub-Modul hat keinen eigenen Mikrocontroller. Ein Nutzer verbindet seine
 | --- | --- |
 | [BQ25/BQ27 for Beginners](BQ25_BQ27_BEGINNER.md#english) | Short beginner explanation for users with no battery-chip background. |
 | [Web UI Documentation](BATTHUB_WEB_UI.md#english) | Every visible Web UI term, button, value, and risk. |
+| [Charging Troubleshooting](CHARGING_TROUBLESHOOTING.md#english) | Step-by-step help when charging is slow, stopped, or confusing. |
 | [Library Documentation](BATTHUB_LIBRARY.md#batthub-library) | Batthub library, startup, pins, API, and terms. |
+| [API Reference](API_REFERENCE.md) | Map of the public classes and methods. |
+| [Hardware Handoff](HARDWARE_HANDOFF.md) | What must be uploaded with schematic/BOM before release. |
 | [Product Readiness](PRODUCT_READINESS.md#english) | Short safety and selling-preparation checklist. |
 
 ## Kurzer Start / Quick Start

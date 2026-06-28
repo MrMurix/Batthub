@@ -1,0 +1,39 @@
+name: Hardware validation
+description: Track schematic, board, and real-hardware validation work
+title: "[Hardware]: "
+labels: ["hardware", "validation"]
+body:
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Which board revision, schematic, or hardware behavior is being validated?
+    validations:
+      required: true
+  - type: checkboxes
+    id: files
+    attributes:
+      label: Uploaded files
+      options:
+        - label: Schematic PDF uploaded under hardware/
+        - label: BOM uploaded under hardware/
+        - label: Pinout uploaded under hardware/
+        - label: Tested limits uploaded under hardware/
+  - type: checkboxes
+    id: tests
+    attributes:
+      label: Tests completed
+      options:
+        - label: Max charge-current thermal test
+        - label: Weak and strong USB adapter test
+        - label: Charge termination test
+        - label: Empty battery precharge test
+        - label: No-battery behavior test
+        - label: OTG boost load test
+        - label: TS/NTC cold, normal, hot, and open test
+        - label: BQ27441 battery profile write/read test
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes and measurements
+      render: text

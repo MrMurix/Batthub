@@ -1,3 +1,7 @@
 dist/
 *.zip
 examples/web_debug_ui/hanio.txt
+.DS_Store
+*.swp
+*.swo
+*~

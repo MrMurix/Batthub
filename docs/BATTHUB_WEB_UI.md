@@ -14,6 +14,9 @@ Diese Doku gehoert zum Beispiel `examples/web_debug_ui`. Das Beispiel laeuft auf
 | `Not found` | Der jeweilige BQ-Chip antwortet nicht auf I2C. |
 | `ON` / `OFF` | Schalterzustand; gruen ist ON, rot ist OFF. |
 | `Yes` / `No` | Statuszustand; kein Schalter. |
+| `Expert Locked` | Normale Schutzstufe. Riskante Aktionen fragen nach, bevor sie geschrieben werden. |
+| `Expert Unlocked` | Expertenmodus. Riskante Aktionen bleiben erreichbar und fragen weniger nach. |
+| `Safe Charge` | Schreibt einen konservativen, stabilen Lade-Startzustand: Laden an, OTG/HIZ aus, feste VINDPM-Grenze, keine automatische Adapter-Optimierung. |
 | `Reset Both` | Setzt BQ25895 und BQ27441 zurueck und schreibt danach die gespeicherten Charger-Settings wieder. |
 | `BQ25895 Charger` | Tab fuer Laden, USB-Eingang, Power-Path, OTG und Charger-Fehler. |
 | `BQ27441 Gauge` | Tab fuer Akku-Prozent, Akku-Profil, Fuel-Gauge-Status und Gauge-Optionen. |
@@ -43,6 +46,7 @@ Diese Doku gehoert zum Beispiel `examples/web_debug_ui`. Das Beispiel laeuft auf
 | `gpoutMode` und `temperatureSource` | Mit `Apply BQ27441 Options`. |
 | BQ27441 Battery Profile | Nur mit `Write Battery Profile`. |
 | Action-Buttons | Sofort beim Klick. |
+| Riskante Actions bei `Expert Locked` | Erst nach Bestaetigung. |
 
 ## BQ25895 Uebersichtskarten
 
@@ -56,6 +60,23 @@ Diese Doku gehoert zum Beispiel `examples/web_debug_ui`. Das Beispiel laeuft auf
 | `System: ... mV` | Aktuelle SYS-Ausgangsspannung vom Power-Path. |
 | `Charge Current` | Aktueller Ladestrom, gemessen vom Charger-ADC. |
 | `Measured by charger ADC` | Hinweis: Wert kommt vom BQ25895-ADC, nicht vom BQ27441. |
+
+## Charge Diagnosis
+
+| Anzeige | Was es bedeutet |
+| --- | --- |
+| `BQ25895 not found` | Charger antwortet nicht auf I2C. |
+| `Charging blocked by CE` | `CE Pin Enabled` ist OFF und blockiert Laden. |
+| `Charging disabled in software` | `Charging Enabled` ist OFF. |
+| `Input is in high impedance` | `High Impedance` ist ON und reduziert/trennt den Eingang. |
+| `OTG boost is active` | OTG ist ON; Akku versorgt VBUS statt normal zu laden. |
+| `No valid USB input` | `Power Good` ist No. |
+| `Charge fault`, `NTC temperature fault`, `Watchdog fault`, `Battery fault` | Der jeweilige Fehler blockiert oder stoert Laden. |
+| `Input voltage limit is active` | VINDPM regelt; der Chip reduziert Strom, um VBUS zu halten. |
+| `Input current limit is active` | Eingangsstromlimit ist erreicht. |
+| `Precharge is working` | Akku ist tief, BQ27441 sieht Strom in den Akku. Das ist normal. |
+| `Fast charge is active` | Normaler Ladebereich ist aktiv. |
+| `Charge complete` | Ladeende erkannt. |
 
 ## BQ25895 Charge State Werte
 
@@ -115,6 +136,9 @@ Diese Doku gehoert zum Beispiel `examples/web_debug_ui`. Das Beispiel laeuft auf
 | `Charge Current` | Wirklich im Chip gesetzter maximaler Ladestrom. |
 | `Charge Voltage` | Wirklich im Chip gesetzte Ziel-Ladespannung. |
 | `Input Limit` | Wirklich im Chip gesetztes Eingangsstromlimit. |
+| `Input Voltage Limit` | Wirklich im Chip gesetzte VINDPM-Eingangsspannungsgrenze. |
+| `Absolute VINDPM` | Zeigt, ob der BQ25895 eine feste VINDPM-Schwelle nutzt. |
+| `VINDPM Offset` | Wirklich gesetzter Offset fuer dynamische VINDPM-Regelung. |
 | `Watchdog` | Wirklich im Chip gesetzter Watchdog-Timer. |
 | `Safety Timer` | Wirklich im Chip gesetzte maximale Ladezeit. |
 | `Thermal Limit` | Wirklich im Chip gesetzte Temperatur-Regelgrenze. |
@@ -186,6 +210,25 @@ Diese Doku gehoert zum Beispiel `examples/web_debug_ui`. Das Beispiel laeuft auf
 | `PumpX Down` | Fordert bei kompatiblem Adapter eine niedrigere Eingangsspannung an. |
 | `Ship Mode` | Schaltet BATFET fuer Lagerung/Transport ab; Akku-Pfad kann abgeschaltet werden. |
 | `Reset BQ25895` | Setzt den Charger zurueck und schreibt gespeicherte Charger-Settings neu. |
+
+## Safe Charge Startwerte
+
+| Einstellung | Wert |
+| --- | --- |
+| `CE Pin Enabled` | ON |
+| `Charging Enabled` | ON |
+| `High Impedance` | OFF |
+| `OTG Boost Enabled` | OFF |
+| `inputCurrentLimitMa` | 1000 mA |
+| `chargeCurrentMa` | 500 mA |
+| `prechargeCurrentMa` | 128 mA |
+| `chargeVoltageMv` | 4208 mV |
+| `Auto DPDM` / `ICO` / `HVDCP` / `MaxCharge` | OFF |
+| `Absolute VINDPM` | ON |
+| `inputVoltageLimitMv` | 4400 mV |
+| `watchdog` | Off |
+
+`Safe Charge` ist ein Debug-Startpunkt, nicht die maximal moegliche Ladegeschwindigkeit.
 
 ## BQ27441 Uebersichtskarten
 
@@ -334,6 +377,9 @@ This documentation belongs to the `examples/web_debug_ui` example. The example r
 | `Not found` | The selected BQ chip does not answer on I2C. |
 | `ON` / `OFF` | Switch state; green is ON, red is OFF. |
 | `Yes` / `No` | Status state, not a switch. |
+| `Expert Locked` | Normal guarded mode. Risky actions ask for confirmation before they are written. |
+| `Expert Unlocked` | Expert mode. Risky actions remain available and ask less often. |
+| `Safe Charge` | Writes a conservative stable charging baseline: charging on, OTG/HIZ off, fixed VINDPM, no automatic adapter optimization. |
 | `Reset Both` | Resets BQ25895 and BQ27441 and then writes saved charger settings again. |
 | `BQ25895 Charger` | Tab for charging, USB input, power-path, OTG, and charger faults. |
 | `BQ27441 Gauge` | Tab for battery percent, battery profile, fuel-gauge status, and gauge options. |
@@ -363,6 +409,7 @@ This documentation belongs to the `examples/web_debug_ui` example. The example r
 | `gpoutMode` and `temperatureSource` | With `Apply BQ27441 Options`. |
 | BQ27441 Battery Profile | Only with `Write Battery Profile`. |
 | Action buttons | Immediately on click. |
+| Risky actions while `Expert Locked` | Only after confirmation. |
 
 ## BQ25895 Overview Cards
 
@@ -376,6 +423,23 @@ This documentation belongs to the `examples/web_debug_ui` example. The example r
 | `System: ... mV` | Current SYS output voltage from the power-path. |
 | `Charge Current` | Current charge current measured by the charger ADC. |
 | `Measured by charger ADC` | The value comes from the BQ25895 ADC, not from the BQ27441. |
+
+## Charge Diagnosis
+
+| Display | Meaning |
+| --- | --- |
+| `BQ25895 not found` | Charger does not answer on I2C. |
+| `Charging blocked by CE` | `CE Pin Enabled` is OFF and blocks charging. |
+| `Charging disabled in software` | `Charging Enabled` is OFF. |
+| `Input is in high impedance` | `High Impedance` is ON and reduces/disconnects the input path. |
+| `OTG boost is active` | OTG is ON; battery powers VBUS instead of normal charging. |
+| `No valid USB input` | `Power Good` is No. |
+| `Charge fault`, `NTC temperature fault`, `Watchdog fault`, `Battery fault` | The shown fault is blocking or disturbing charge. |
+| `Input voltage limit is active` | VINDPM is regulating; the chip reduces current to hold VBUS. |
+| `Input current limit is active` | Input current limit has been reached. |
+| `Precharge is working` | Battery is low and BQ27441 sees current into the battery. This is normal. |
+| `Fast charge is active` | Normal charging range is active. |
+| `Charge complete` | Charge termination was detected. |
 
 ## BQ25895 Charge State Values
 
@@ -428,6 +492,9 @@ This documentation belongs to the `examples/web_debug_ui` example. The example r
 | `Charge Current` | Maximum charge current actually set in the chip. |
 | `Charge Voltage` | Target charge voltage actually set in the chip. |
 | `Input Limit` | Input current limit actually set in the chip. |
+| `Input Voltage Limit` | VINDPM input-voltage threshold actually set in the chip. |
+| `Absolute VINDPM` | Shows whether the BQ25895 uses a fixed VINDPM threshold. |
+| `VINDPM Offset` | Actual offset for dynamic VINDPM regulation. |
 | `Watchdog` | Watchdog timer actually set in the chip. |
 | `Safety Timer` | Maximum charge time actually set in the chip. |
 | `Thermal Limit` | Temperature regulation limit actually set in the chip. |
@@ -489,6 +556,25 @@ This documentation belongs to the `examples/web_debug_ui` example. The example r
 | `PumpX Down` | Requests lower input voltage from a compatible adapter. |
 | `Ship Mode` | Turns off BATFET for storage/transport; battery path can be disabled. |
 | `Reset BQ25895` | Resets the charger and writes saved charger settings again. |
+
+## Safe Charge Start Values
+
+| Setting | Value |
+| --- | --- |
+| `CE Pin Enabled` | ON |
+| `Charging Enabled` | ON |
+| `High Impedance` | OFF |
+| `OTG Boost Enabled` | OFF |
+| `inputCurrentLimitMa` | 1000 mA |
+| `chargeCurrentMa` | 500 mA |
+| `prechargeCurrentMa` | 128 mA |
+| `chargeVoltageMv` | 4208 mV |
+| `Auto DPDM` / `ICO` / `HVDCP` / `MaxCharge` | OFF |
+| `Absolute VINDPM` | ON |
+| `inputVoltageLimitMv` | 4400 mV |
+| `watchdog` | Off |
+
+`Safe Charge` is a debug baseline, not the maximum possible charging speed.
 
 ## BQ27441 Cards, Flags, and State
 

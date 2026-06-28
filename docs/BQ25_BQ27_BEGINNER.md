@@ -91,6 +91,21 @@ Minimal:
 - ob ein NTC/Temperatursensor angeschlossen ist.
 - wie viel Strom USB, Kabel, Stecker und PCB wirklich aushalten.
 
+### Wichtig fuer die Web UI
+
+Die Web UI ist ein Debug-Werkzeug. Sie zeigt sehr viele BQ25895- und BQ27441-Funktionen, auch solche, die Laden absichtlich stoppen koennen.
+
+| Web-UI-Hilfe | Bedeutung |
+| --- | --- |
+| `Safe Charge` | Stabiler Startpunkt zum Laden und Testen. Nutzt konservative Werte und schaltet riskante Lade-Blocker aus. |
+| `Expert Locked` | Normale Schutzstufe. Riskante Funktionen fragen nach. |
+| `Charge Diagnosis` | Kurzer Text, warum gerade geladen, langsam geladen oder nicht geladen wird. |
+| `Actual BQ25895 Settings` | Echte Werte im Chip. Diese sind wichtiger als Wunschwerte in Eingabefeldern. |
+
+Als Beginner: erst `Safe Charge`, dann `Charge Diagnosis` lesen, dann `BQ27441 Average current` ansehen.
+
+Mehr Details: [Charging Troubleshooting](CHARGING_TROUBLESHOOTING.md#deutsch).
+
 ### Sicherheit
 
 Diese Library macht die Chips bedienbar. Sie macht den Akku nicht automatisch sicher. Hardware, Akku, Stecker, Leiterbahnen, Temperatur und Schutzschaltung muessen real getestet werden.
@@ -185,6 +200,21 @@ Minimum:
 - Allowed charge voltage, often 4200 mV for a normal Li-Ion/LiPo cell.
 - Whether an NTC/temperature sensor is connected.
 - How much current the USB adapter, cable, connector, and PCB can really handle.
+
+### Important for the Web UI
+
+The Web UI is a debug tool. It exposes many BQ25895 and BQ27441 functions, including functions that can intentionally stop charging.
+
+| Web UI help | Meaning |
+| --- | --- |
+| `Safe Charge` | Stable starting point for charging and testing. Uses conservative values and disables risky charge blockers. |
+| `Expert Locked` | Normal guarded mode. Risky functions ask for confirmation. |
+| `Charge Diagnosis` | Short text explaining why charging is active, slow, or blocked. |
+| `Actual BQ25895 Settings` | Real values inside the chip. These matter more than desired values in input fields. |
+
+As a beginner: press `Safe Charge`, read `Charge Diagnosis`, then check `BQ27441 Average current`.
+
+More detail: [Charging Troubleshooting](CHARGING_TROUBLESHOOTING.md#english).
 
 ### Safety
 

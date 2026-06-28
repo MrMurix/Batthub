@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a firmware, example, or documentation bug
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the example sketch, board, and commands used.
+    validations:
+      required: true
+  - type: input
+    id: board
+    attributes:
+      label: Controller board
+      placeholder: ESP32-C3, Arduino Uno, STM32, etc.
+  - type: input
+    id: battery
+    attributes:
+      label: Battery
+      placeholder: 1S LiPo, capacity, charge voltage
+  - type: textarea
+    id: logs
+    attributes:
+      label: Serial output or build log
+      render: text
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed WiFi passwords, keys, and private customer data from logs.
+          required: true

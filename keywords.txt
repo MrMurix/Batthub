@@ -1,3 +1,4 @@
+Batthub	KEYWORD1
 bq25	KEYWORD1
 bq27	KEYWORD1
 bq25bq27	KEYWORD1
@@ -7,6 +8,11 @@ lastBeginReport	KEYWORD2
 applyConfig	KEYWORD2
 configure1s	KEYWORD2
 snapshot	KEYWORD2
+applySafeDefaults	KEYWORD2
+applyChargerSettings	KEYWORD2
+setChargeEnabled	KEYWORD2
+setCePinEnabled	KEYWORD2
+setOtgPinEnabled	KEYWORD2
 setChargeCurrent	KEYWORD2
 setChargeVoltage	KEYWORD2
 setInputCurrentLimit	KEYWORD2
